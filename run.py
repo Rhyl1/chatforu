@@ -10,12 +10,8 @@ def add_messages(username, message):
     """Add messages to the 'messages' list """
     now = datetime.now().strftime("%H:%M:%S")
     messages_dict = {"timestamp": now, "from": username, "message": message}
-
     messages.append(messages_dict)
 
-def get_all_messages():
-    """Get all of the messages and seperate them with a BR tag """
-    return "<br>".join(messages)
 @app.route ('/', methods = ["GET", "POST"])
 def index():
     """Main page with instructions"""
@@ -30,7 +26,7 @@ def index():
 @app.route ('/<username>')
 def user(username):
     """ Display chat messages """
-    return "<h1>Welcome, {0}</h1>{1}".format(username, get_all_messages())
+    return render_template("chat.html", username = username, chat_messages = messages)
 
 @app.route ('/<username>/<message>')
 def send_message(username, message):
